@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bln1id6v5r31c"]
+
+[ext_resource type="PackedScene" uid="uid://btm6ls5qf6662" path="res://MainMenu.tscn" id="1_ig7tw"]
+
+[node name="Main" type="Node2D"]
+
+[node name="MainMenu" parent="." instance=ExtResource("1_ig7tw")]
+position = Vector2(100, 250)
+script = null
+
+[editable path="MainMenu"]

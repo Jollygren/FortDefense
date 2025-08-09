@@ -1,0 +1,59 @@
+[gd_scene load_steps=4 format=3 uid="uid://btm6ls5qf6662"]
+
+[ext_resource type="Script" uid="uid://dptte2qmmmgxx" path="res://MainMenu.cs" id="1_h7a2f"]
+[ext_resource type="Texture2D" uid="uid://v15f7tr4pi5f" path="res://MenuAssets/Start button.png" id="2_h7a2f"]
+[ext_resource type="Texture2D" uid="uid://gkikjog6o8pu" path="res://MenuAssets/Exit.png" id="3_qoqlk"]
+
+[node name="Start" type="Node2D"]
+script = ExtResource("1_h7a2f")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 120
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_right = 120
+theme_override_constants/margin_bottom = 80
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 1.39
+theme_override_constants/separation = 20
+
+[node name="Start" type="TextureRect" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 1.13
+texture = ExtResource("2_h7a2f")
+
+[node name="Exit" type="TextureRect" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_qoqlk")
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Made by" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "A Game made by Evan Jolliffe"
+
+[node name="Engine" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "using Godot Engine"
+
+[node name="StartButton" type="Button" parent="."]
+offset_left = 120.0
+offset_top = 80.0
+offset_right = 240.0
+offset_bottom = 131.0
+
+[node name="ExitButton" type="Button" parent="."]
+offset_left = 120.0
+offset_top = 151.0
+offset_right = 240.0
+offset_bottom = 218.0
+
+[connection signal="pressed" from="StartButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="ExitButton" to="." method="_on_button_pressed"]
