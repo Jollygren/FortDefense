@@ -1,8 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://btm6ls5qf6662"]
+[gd_scene load_steps=4 format=3 uid="uid://di32p3w2vteyr"]
 
-[ext_resource type="Script" uid="uid://dptte2qmmmgxx" path="res://MainMenu.cs" id="1_h7a2f"]
-[ext_resource type="Texture2D" uid="uid://v15f7tr4pi5f" path="res://MenuAssets/Start button.png" id="2_h7a2f"]
-[ext_resource type="Texture2D" uid="uid://gkikjog6o8pu" path="res://MenuAssets/Exit.png" id="3_qoqlk"]
+[ext_resource type="Script" uid="uid://dne1xwifcn0tn" path="res://Scripts/MainMenu.cs" id="1_h7a2f"]
+[ext_resource type="Texture2D" uid="uid://v15f7tr4pi5f" path="res://SlimeAttackAssets/MenuAssets/Start button.png" id="2_h7a2f"]
+[ext_resource type="Texture2D" uid="uid://gkikjog6o8pu" path="res://SlimeAttackAssets/MenuAssets/Exit.png" id="3_qoqlk"]
 
 [node name="Start" type="Node2D"]
 script = ExtResource("1_h7a2f")

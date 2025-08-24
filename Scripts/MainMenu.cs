@@ -3,40 +3,32 @@ using System;
 
 public partial class MainMenu : Node2D
 {
-    PackedScene _gameScene;
-    private void OnStartPressed()
+    [Signal]
+    public delegate void OnStartPressedEventHandler();
+
+    [Signal]
+    public delegate void OnExitPressedEventHandler();
+    private void StartPressed()
     {
-        var startButton = GetNodeOrNull<Button>("StartButton");
-        var exitButton = GetNodeOrNull<Button>("ExitButton");
-        var background = GetNodeOrNull<MarginContainer>("MarginContainer");
-
-        startButton.QueueFree();
-        exitButton.QueueFree();
-        background.QueueFree();
-
-
-        _gameScene = GD.Load<PackedScene>("res://main.tscn");
-        var instance = _gameScene.Instantiate();
-        AddChild(instance);
+        EmitSignal(SignalName.OnStartPressed);
+        this.QueueFree();
     }
 
-    private void OnExitPressed()
+    private void ExitPressed()
     {
-        this.GetTree().Quit(); // Exit the game
+        EmitSignal(SignalName.OnExitPressed);
+        this.QueueFree();
     }
 
     public override void _Ready()
     {
-        // This method is called when the node is added to the scene.
-        // You can use it to initialize variables, connect signals, or set up the node's properties.
-
-        // Example: Connect a signal to a method
+        //Connects Start and Exit to StartPressed and Exit Pressed, checks to see if they exist
         var startButton = GetNodeOrNull<Button>("StartButton");
         var exitButton = GetNodeOrNull<Button>("ExitButton");
 
         if (startButton != null)
         {
-            startButton.Pressed += OnStartPressed;
+            startButton.Pressed += StartPressed;
         }
         else
         {
@@ -46,7 +38,7 @@ public partial class MainMenu : Node2D
 
         if (exitButton != null)
         {
-            exitButton.Pressed += OnExitPressed;
+            exitButton.Pressed += ExitPressed;
         }
         else
         {

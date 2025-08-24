@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dry8spqhy3igf"]
+
+[ext_resource type="PackedScene" uid="uid://7td6t3qg26vh" path="res://world.tscn" id="1_80nbo"]
+[ext_resource type="PackedScene" uid="uid://6kahkut635s5" path="res://player.tscn" id="2_e2o6t"]
+
+[node name="Game" type="Node2D"]
+
+[node name="World" parent="." instance=ExtResource("1_80nbo")]
+
+[node name="Base" parent="World" index="0"]
+scale = Vector2(2.0254, 1.90669)
+
+[node name="Player" parent="." instance=ExtResource("2_e2o6t")]
+
+[editable path="World"]
