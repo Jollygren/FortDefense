@@ -3,65 +3,103 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
-    public int Speed = 300;
+    const int Speed = 300;
+    const int MarkerDistance = 200;
     private AnimatedSprite2D animatedSprite;
-    private string keyHeld;
+    private Marker2D buildMarker;
+    private TileMapLayer BuildLayer;
+    private PackedScene foundationTemplate;
+    private string direction;
+    private bool keyReleased;
+
+    [Signal]
+    public delegate void BuildFoundationEventHandler(Node2D foundationInstance);
 
     public override void _Ready()
     {
         animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-        keyHeld = "";
+        buildMarker = GetNode<Marker2D>("BuildMarker");
+        BuildLayer = GetNode<TileMapLayer>("../World/BuildLayer");
+        if (BuildLayer == null)
+        {
+            GD.Print("BuildLayer not found");
+        }
+        foundationTemplate = GD.Load<PackedScene>("res://Foundation.tscn");
+        direction = "";
+        keyReleased = true;
     }
 
     public override void _Process(double delta)
     {
         base._Process(delta);
 
-        Vector2 velocity = Velocity;
-        velocity = Input.GetVector("moveLeft", "moveRight", "moveUp", "moveDown");
-        velocity = velocity.Normalized() * Speed;
+        Vector2 velocity = GetVector();
         MoveAndCollide(velocity * (float)delta);
 
-        if (keyHeld == "")
+        if (keyReleased)
         {
-            if (Input.IsActionPressed("moveRight"))
+            string tempDirection = direction;
+            direction = GetDirectionPressed();
+            UpdateBuildMarkerPosition();
+            // Only set keyReleased to false if the direction has changed
+            if (direction != tempDirection)
             {
-                keyHeld = "Right";
-                GD.Print("Right key held");
-            }
-            else if (Input.IsActionPressed("moveLeft"))
-            {
-                keyHeld = "Left";
-                GD.Print("Left key held");
-            }
-            else if (Input.IsActionPressed("moveUp"))
-            {
-                keyHeld = "Up";
-                GD.Print("Up key held");
-            }
-            else if (Input.IsActionPressed("moveDown"))
-            {
-                keyHeld = "Down";
-                GD.Print("Down key held");
+                keyReleased = false;
             }
         }
-        else if (Input.IsActionJustReleased("move" + keyHeld))
+        else if (Input.IsActionJustReleased("move" + direction))
         {
-            keyHeld = "";
+            keyReleased = true;
         }
         if (velocity != Vector2.Zero)
         {
-            animatedSprite.Animation = "walk" + keyHeld;
+            animatedSprite.Animation = "walk" + direction;
             animatedSprite.Play();
         }
         else
         {
-            string direction = animatedSprite.GetAnimation();
-            if (!direction.Contains("idle"))
+            string currentAnimation = animatedSprite.GetAnimation();
+            if (!currentAnimation.Contains("idle"))
             {
-                animatedSprite.Animation = direction.Replace("walk", "idle");
+                animatedSprite.Animation = currentAnimation.Replace("walk", "idle");
             }
-            
         }
+        if (foundationTemplate != null)
+        {
+            var foundationInstance = foundationTemplate.Instantiate() as Node2D;
+            foundationInstance.Position = BuildLayer.LocalToMap(buildMarker.GlobalPosition);
+            GD.Print("Build Position: " + foundationInstance.Position);
+            EmitSignal("BuildFoundation", foundationInstance);
+        }
+    }
+
+    private void UpdateBuildMarkerPosition()
+    {
+        buildMarker.Position = direction switch
+        {
+            "Right" => new Vector2(MarkerDistance, 0),
+            "Left" => new Vector2(-MarkerDistance, 0),
+            "Up" => new Vector2(0, -MarkerDistance),
+            "Down" => new Vector2(0, MarkerDistance),
+            _ => buildMarker.Position
+        };
+    }
+
+    private Vector2 GetVector()
+    {
+        return Input.GetVector("moveLeft", "moveRight", "moveUp", "moveDown").Normalized() * Speed;
+    }
+
+    private string GetDirectionPressed()
+    {
+        if (Input.IsActionPressed("moveRight"))
+            return "Right";
+        else if (Input.IsActionPressed("moveLeft"))
+            return "Left";
+        else if (Input.IsActionPressed("moveUp"))
+            return "Up";
+        else if (Input.IsActionPressed("moveDown"))
+            return "Down";
+        return direction;
     }
 }

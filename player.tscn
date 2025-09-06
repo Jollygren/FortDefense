@@ -1,19 +1,37 @@
-[gd_scene load_steps=7 format=3 uid="uid://6kahkut635s5"]
+[gd_scene load_steps=9 format=3 uid="uid://6kahkut635s5"]
 
 [ext_resource type="Script" uid="uid://b33243fe4dfj3" path="res://Player.cs" id="1_sweqy"]
-[ext_resource type="Texture2D" path="res://WoodElfDown.png" id="2_2hs0m"]
 [ext_resource type="Texture2D" uid="uid://dfj0y31fnu147" path="res://WoodElfSprites/WoodElfUp.png" id="3_1jxqw"]
 [ext_resource type="Texture2D" uid="uid://c3t0bxase7oo" path="res://WoodElfSprites/WoodElfDown.png" id="4_dw050"]
-[ext_resource type="Texture2D" path="res://WoodElfDownWalk1.png" id="5_b26j0"]
+[ext_resource type="Texture2D" uid="uid://dkdgvyfrqtiny" path="res://WoodElfSprites/WoodElfDownWalk1.png" id="4_hqtel"]
+[ext_resource type="Texture2D" uid="uid://ju7g4wm58xm6" path="res://WoodElfSprites/WoodElfDown2.png" id="5_sweqy"]
+[ext_resource type="Texture2D" uid="uid://ys5c3oax3e7a" path="res://WoodElfSprites/WoodElfUp1.png" id="6_2hs0m"]
+[ext_resource type="Texture2D" uid="uid://t4g02stau0tq" path="res://WoodElfSprites/WoodElfUp2.png" id="7_1jxqw"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_n7ghd"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_2hs0m")
+"texture": ExtResource("4_dw050")
 }],
 "loop": true,
 "name": &"idleDown",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_dw050")
+}],
+"loop": true,
+"name": &"idleLeft",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_1jxqw")
+}],
+"loop": true,
+"name": &"idleRight",
 "speed": 5.0
 }, {
 "frames": [{
@@ -29,7 +47,13 @@ animations = [{
 "texture": ExtResource("4_dw050")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_b26j0")
+"texture": ExtResource("4_hqtel")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_dw050")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_sweqy")
 }],
 "loop": true,
 "name": &"walkDown",
@@ -37,11 +61,54 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("4_dw050")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_hqtel")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_dw050")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_sweqy")
+}],
+"loop": true,
+"name": &"walkLeft",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("3_1jxqw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_2hs0m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_1jxqw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_1jxqw")
+}],
+"loop": true,
+"name": &"walkRight",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_1jxqw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_2hs0m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_1jxqw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_1jxqw")
 }],
 "loop": true,
 "name": &"walkUp",
-"speed": 5.0
+"speed": 3.0
 }]
 
 [node name="Player" type="CharacterBody2D"]
@@ -49,4 +116,19 @@ script = ExtResource("1_sweqy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_n7ghd")
-animation = &"walkDown"
+animation = &"idleDown"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+
+[node name="MarginContainer" type="MarginContainer" parent="Camera2D"]
+offset_left = -280.0
+offset_top = -150.0
+offset_right = 280.0
+offset_bottom = 150.0
+
+[node name="TextureRect" type="TextureRect" parent="Camera2D/MarginContainer"]
+layout_mode = 2
+
+[node name="BuildMarker" type="Marker2D" parent="."]
+position = Vector2(0, 200)

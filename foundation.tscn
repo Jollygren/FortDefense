@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=4 uid="uid://bthonrjnkayq8"]
+
+[ext_resource type="Texture2D" uid="uid://bp68kverk100q" path="res://Tiles/Wood Floor.png" id="1_2m1qn"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0vhpa"]
+texture = ExtResource("1_2m1qn")
+texture_region_size = Vector2i(40, 40)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_yd7jk"]
+tile_size = Vector2i(40, 40)
+sources/0 = SubResource("TileSetAtlasSource_0vhpa")
+
+[node name="Foundation" type="Node2D"]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+scale = Vector2(2, 2)
+tile_map_data = PackedByteArray("AAD///7/AAAAAAAAAAD/////AAAAAAEAAAD//wAAAAAAAAIAAAAAAP7/AAABAAAAAAAAAP//AAABAAEAAAAAAAAAAAABAAIAAAABAP7/AAACAAAAAAABAP//AAACAAEAAAABAAAAAAACAAIAAAA=")
+tile_set = SubResource("TileSet_yd7jk")
